@@ -4,19 +4,11 @@ using UnityEngine;
 
 public class BehaviourTreeRunner : MonoBehaviour
 {
-    BehaviourTree tree;
+    public BehaviourTree tree;
 
     void Start()
     {
-        tree = ScriptableObject.CreateInstance<BehaviourTree>();
-
-        var log = ScriptableObject.CreateInstance<DebugLogNode>();
-        log.message = "AAAAA";
-
-        var loop = ScriptableObject.CreateInstance<RepeatNode>();
-        loop.child = log;
-
-        tree.rootNode = loop;
+        tree = tree.Clone();
     }
 
     void Update()
