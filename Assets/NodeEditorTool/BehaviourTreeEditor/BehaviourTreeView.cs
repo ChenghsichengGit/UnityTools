@@ -4,6 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Diagnostics;
 
 public class BehaviourTreeView : GraphView
 {
@@ -22,6 +23,16 @@ public class BehaviourTreeView : GraphView
 
         var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/NodeEditorTool/BehaviourTreeEditor/BehaviourTreeEditor.uss");
         styleSheets.Add(styleSheet);
+
+        Undo.undoRedoPerformed += OnUndoRedo;
+    }
+
+    private void OnUndoRedo()
+    {
+        if (!tree) return;
+
+        PopulateView(tree);
+        AssetDatabase.SaveAssets();
     }
 
     NodeView FindNodeView(Node node)
@@ -101,12 +112,20 @@ public class BehaviourTreeView : GraphView
             });
         }
 
+        if (graphViewChange.movedElements != null)
+        {
+            nodes.ForEach((n) =>
+            {
+                NodeView view = n as NodeView;
+                view.SortChildren();
+            });
+        }
+
         return graphViewChange;
     }
 
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
     {
-        // base.BuildContextualMenu(evt);
         {
             var types = TypeCache.GetTypesDerivedFrom<ActionNode>();
             foreach (var type in types)
@@ -136,6 +155,7 @@ public class BehaviourTreeView : GraphView
     {
         Node node = tree.CreateNode(type);
         CreateNodeView(node);
+        node.nodeName = type.ToString();
     }
 
     void CreateNodeView(Node node)
@@ -143,5 +163,14 @@ public class BehaviourTreeView : GraphView
         NodeView nodeView = new NodeView(node);
         nodeView.OnNodeSelected = OnNodeSelected;
         AddElement(nodeView);
+    }
+
+    public void UpdateNodeStates()
+    {
+        nodes.ForEach(n =>
+        {
+            NodeView view = n as NodeView;
+            view.UpdateState();
+        });
     }
 }
