@@ -20,6 +20,8 @@ public class DebugLogNode : ActionNode
         Debug.Log($"OnUpdate{message}");
         Debug.Log($"Blackboard:{blackboard.moveToPosition}");
 
+        Debug.Log(variable.FindByName("int"));
+
         return State.Success;
     }
 }

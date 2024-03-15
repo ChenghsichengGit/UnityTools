@@ -10,7 +10,7 @@ public class BehaviourTree : ScriptableObject
     public Node rootNode;
     public Node.State treeState = Node.State.Running;
     public List<Node> nodes = new List<Node>();
-    public Blackboard blackboard = new Blackboard();
+    public Variable variable = new Variable();
 
     public Node.State Update()
     {
@@ -152,6 +152,14 @@ public class BehaviourTree : ScriptableObject
         });
 
         return tree;
+    }
+
+    public void Bind()
+    {
+        Traverse(rootNode, node =>
+        {
+            node.variable = this.variable;
+        });
     }
 
 }

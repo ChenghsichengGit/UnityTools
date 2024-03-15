@@ -16,11 +16,16 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 0a5ceee3391851d4f9dc06d7468f432a
-  position: {x: -539.3601, y: 212.33337}
+  position: {x: -538.0002, y: 181.33331}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     MoveToObject: {fileID: 0}
     count: 0
+  variable:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
   description: 
   message: 1
 --- !u!114 &11400000
@@ -33,7 +38,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3a9b44d70309454e9f08a90bd2dafc1, type: 3}
-  m_Name: New Behaviour Tree
+  m_Name: 123
   m_EditorClassIdentifier: 
   rootNode: {fileID: 5482355981897846658}
   treeState: 0
@@ -43,10 +48,15 @@ MonoBehaviour:
   - {fileID: 199681521753103273}
   - {fileID: -8650580225073772061}
   - {fileID: 2322004191221655111}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    MoveToObject: {fileID: 0}
-    count: 0
+  variable:
+    ints:
+    - name: int
+      value: 123
+    floats: []
+    bools: []
+    strings:
+    - name: ASD
+      value: 
 --- !u!114 &199681521753103273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,11 +73,16 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: bbd6d0856d5c6f041b52517f58443cd6
-  position: {x: -411.66663, y: -129.74461}
+  position: {x: -412.00006, y: -119.84633}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     MoveToObject: {fileID: 0}
     count: 0
+  variable:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
   description: 
   child: {fileID: 765317123947599129}
 --- !u!114 &765317123947599129
@@ -86,11 +101,16 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 7092dbfb5bca37e4c93af0813bd7ae84
-  position: {x: -411.33334, y: 29.999979}
+  position: {x: -412, y: 15.3333435}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     MoveToObject: {fileID: 0}
     count: 0
+  variable:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
   description: 
   children:
   - {fileID: -8650580225073772061}
@@ -111,11 +131,16 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 5fd82a016ad4caf4094a230c71a1eb99
-  position: {x: -272.6667, y: 179.33333}
+  position: {x: -288.96683, y: 180.99998}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     MoveToObject: {fileID: 0}
     count: 0
+  variable:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
   description: 
   duration: 1
 --- !u!114 &2689453326636151520
@@ -139,6 +164,11 @@ MonoBehaviour:
     moveToPosition: {x: 0, y: 0, z: 0}
     MoveToObject: {fileID: 0}
     count: 0
+  variable:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
   description: 
   child: {fileID: 0}
 --- !u!114 &3550984147937065850
@@ -162,6 +192,11 @@ MonoBehaviour:
     moveToPosition: {x: 0, y: 0, z: 0}
     MoveToObject: {fileID: 0}
     count: 0
+  variable:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
   description: 
   children: []
 --- !u!114 &5482355981897846658
@@ -180,10 +215,15 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 676973714f31b334db68805a9d4a1501
-  position: {x: -412.3282, y: -243.16255}
+  position: {x: -412.00006, y: -264.51987}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     MoveToObject: {fileID: 0}
     count: 0
-  description: 
+  variable:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
+  description: asdasd
   child: {fileID: 199681521753103273}

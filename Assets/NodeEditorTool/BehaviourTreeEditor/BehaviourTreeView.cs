@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using System.Diagnostics;
+using UnityEngine;
 
 public class BehaviourTreeView : GraphView
 {
@@ -126,11 +126,17 @@ public class BehaviourTreeView : GraphView
 
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
     {
+        Event currentEvent = Event.current;
+        Vector2 mousePosition = currentEvent.mousePosition;
+        Rect graphViewRect = this.contentViewContainer.worldBound;
+        mousePosition = Event.current.mousePosition - new Vector2(graphViewRect.x, graphViewRect.y);
+        Rect nodePositiom = new Rect(mousePosition.x, mousePosition.y, 0, 0);
+
         {
             var types = TypeCache.GetTypesDerivedFrom<ActionNode>();
             foreach (var type in types)
             {
-                evt.menu.AppendAction($"Action Nodes/{type.Name}", (a) => CreateNode(type));
+                evt.menu.AppendAction($"Action Nodes/{type.Name}", (a) => CreateNode(type).SetPosition(nodePositiom));
             }
         }
 
@@ -138,7 +144,7 @@ public class BehaviourTreeView : GraphView
             var types = TypeCache.GetTypesDerivedFrom<CompositeNode>();
             foreach (var type in types)
             {
-                evt.menu.AppendAction($"Composite Nodes/{type.Name}", (a) => CreateNode(type));
+                evt.menu.AppendAction($"Composite Nodes/{type.Name}", (a) => CreateNode(type).SetPosition(nodePositiom));
             }
         }
 
@@ -146,23 +152,27 @@ public class BehaviourTreeView : GraphView
             var types = TypeCache.GetTypesDerivedFrom<DecoratorNode>();
             foreach (var type in types)
             {
-                evt.menu.AppendAction($"Decorator Nodes/{type.Name}", (a) => CreateNode(type));
+                evt.menu.AppendAction($"Decorator Nodes/{type.Name}", (a) => CreateNode(type).SetPosition(nodePositiom));
             }
         }
     }
 
-    void CreateNode(System.Type type)
+    NodeView CreateNode(System.Type type)
     {
         Node node = tree.CreateNode(type);
-        CreateNodeView(node);
         node.nodeName = type.ToString();
+
+        return CreateNodeView(node);
+
     }
 
-    void CreateNodeView(Node node)
+    NodeView CreateNodeView(Node node)
     {
         NodeView nodeView = new NodeView(node);
         nodeView.OnNodeSelected = OnNodeSelected;
         AddElement(nodeView);
+
+        return nodeView;
     }
 
     public void UpdateNodeStates()

@@ -172,4 +172,9 @@ public class NodeView : UnityEditor.Experimental.GraphView.Node
             }
         }
     }
+
+    internal void SetPosition(Vector2 mousePosition)
+    {
+        throw new NotImplementedException();
+    }
 }

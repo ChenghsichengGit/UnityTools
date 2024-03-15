@@ -1,20 +1,27 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Headers;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.IMGUI.Controls;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 
 public class BehaviourTreeEditor : EditorWindow
 {
+    BehaviourTree tree;
     BehaviourTreeView treeView;
     InspectorView inspectorView;
-    IMGUIContainer blackboardView;
+    IMGUIContainer variableView;
+    ToolbarMenu assestMenu;
+    ToolbarMenu addMenu;
 
     SerializedObject treeObject;
-    SerializedProperty blackboardProperty;
+    SerializedProperty variableProperty;
 
     [MenuItem("BehaviourTreeEditor/Editor ...")]
     public static void OpenWindow()
@@ -52,15 +59,28 @@ public class BehaviourTreeEditor : EditorWindow
         treeView = new BehaviourTreeView();
         root.Add(treeView);
 
+        // AssestMenu
+        assestMenu = root.Q<ToolbarMenu>("AssestMenu");
+        SearchAndAppendBehaviourTreeAssets();
+
+        // AddMenu
+        addMenu = root.Q<ToolbarMenu>("AddMenu");
+        AddMenuAppendAction();
+
         treeView = root.Q<BehaviourTreeView>();
         inspectorView = root.Q<InspectorView>();
-        blackboardView = root.Q<IMGUIContainer>();
-        blackboardView.onGUIHandler = () =>
+
+        variableView = root.Q<IMGUIContainer>("variable");
+        variableView.onGUIHandler = () =>
         {
-            treeObject.Update();
-            EditorGUILayout.PropertyField(blackboardProperty);
-            treeObject.ApplyModifiedProperties();
+            if (treeObject != null)
+            {
+                treeObject.Update();
+                EditorGUILayout.PropertyField(variableProperty);
+                treeObject.ApplyModifiedProperties();
+            }
         };
+
         treeView.OnNodeSelected = OnNodeSelectionChanged;
         OnSelectionChange();
     }
@@ -68,6 +88,7 @@ public class BehaviourTreeEditor : EditorWindow
     private void OnEnable()
     {
         EditorApplication.playModeStateChanged -= OnPlayerModeStateChanged;
+        SearchAndAppendBehaviourTreeAssets();
         EditorApplication.playModeStateChanged += OnPlayerModeStateChanged;
     }
 
@@ -97,7 +118,7 @@ public class BehaviourTreeEditor : EditorWindow
 
     private void OnSelectionChange()
     {
-        BehaviourTree tree = Selection.activeObject as BehaviourTree;
+        tree = Selection.activeObject as BehaviourTree;
 
         if (!tree)
         {
@@ -129,7 +150,7 @@ public class BehaviourTreeEditor : EditorWindow
         if (tree != null)
         {
             treeObject = new SerializedObject(tree);
-            blackboardProperty = treeObject.FindProperty("blackboard");
+            variableProperty = treeObject.FindProperty("variable");
         }
     }
 
@@ -140,7 +161,37 @@ public class BehaviourTreeEditor : EditorWindow
 
     private void OnInspectorUpdate()
     {
-        treeView?.UpdateNodeStates();
+        treeView.UpdateNodeStates();
+        SearchAndAppendBehaviourTreeAssets();
     }
 
+    private void AddMenuAppendAction()
+    {
+        // addMenu.menu.AppendAction("Int", (a) => { tree.variable.ints.Add(new Int()); });
+
+        // addMenu.menu.AppendAction("Float", (a) => { tree.variable.floats.Add(new Float()); });
+
+        // addMenu.menu.AppendAction("Bool", (a) => { tree.variable.bools.Add(new Bool()); });
+
+        // addMenu.menu.AppendAction("String", (a) => { tree.variable.strings.Add(new String()); });
+
+    }
+
+    // 搜索所有的 BehaviourTree 资源并在 AssestMenu 中添加对应操作
+    private void SearchAndAppendBehaviourTreeAssets()
+    {
+        string[] guids = AssetDatabase.FindAssets("t:BehaviourTree"); // 搜索所有的 BehaviourTree 资源
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid); // 获取资源路径
+            BehaviourTree behaviourTree = AssetDatabase.LoadAssetAtPath<BehaviourTree>(path); // 加载资源对象
+            if (behaviourTree != null)
+            {
+                assestMenu.menu.AppendAction(behaviourTree.name, (a) =>
+                {
+                    Selection.SetActiveObjectWithContext(behaviourTree, behaviourTree);
+                });
+            }
+        }
+    }
 }

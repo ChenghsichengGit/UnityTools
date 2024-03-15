@@ -18,6 +18,7 @@ public abstract class Node : ScriptableObject
     [HideInInspector] public string guid;
     [HideInInspector] public Vector2 position;
     [HideInInspector] public Blackboard blackboard;
+    [HideInInspector] public Variable variable;
     [TextArea] public string description;
 
     public State Update()
