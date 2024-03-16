@@ -43,15 +43,11 @@ public class BehaviourTreeEditor : EditorWindow
 
     public void CreateGUI()
     {
-        // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
 
-        // Import UXML
         var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/NodeEditorTool/BehaviourTreeEditor/BehaviourTreeEditor.uxml");
         visualTree.CloneTree(root);
 
-        // A stylesheet can be added to a VisualElement.
-        // The style will be applied to the VisualElement and all of its children.
         var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/NodeEditorTool/BehaviourTreeEditor/BehaviourTreeEditor.uss");
         root.styleSheets.Add(styleSheet);
 
@@ -73,7 +69,7 @@ public class BehaviourTreeEditor : EditorWindow
         variableView = root.Q<IMGUIContainer>("variable");
         variableView.onGUIHandler = () =>
         {
-            if (treeObject != null)
+            if (treeObject != null && treeObject.targetObject != null)
             {
                 treeObject.Update();
                 EditorGUILayout.PropertyField(variableProperty);
@@ -111,7 +107,6 @@ public class BehaviourTreeEditor : EditorWindow
                 break;
             case PlayModeStateChange.ExitingPlayMode:
                 break;
-
         }
     }
 
@@ -130,6 +125,12 @@ public class BehaviourTreeEditor : EditorWindow
                     tree = runner.tree;
                 }
             }
+            else
+            {
+                tree = null;
+                treeObject = null;
+                treeView?.PopulateView(null);
+            }
         }
 
         if (Application.isPlaying)
@@ -147,10 +148,10 @@ public class BehaviourTreeEditor : EditorWindow
             }
         }
 
-        if (tree != null)
+        if (tree)
         {
             treeObject = new SerializedObject(tree);
-            variableProperty = treeObject.FindProperty("variable");
+            variableProperty = treeObject.FindProperty("variables");
         }
     }
 
@@ -167,13 +168,13 @@ public class BehaviourTreeEditor : EditorWindow
 
     private void AddMenuAppendAction()
     {
-        // addMenu.menu.AppendAction("Int", (a) => { tree.variable.ints.Add(new Int()); });
+        addMenu.menu.AppendAction("Int", (a) => { tree.variables.ints.Add(new Int()); });
 
-        // addMenu.menu.AppendAction("Float", (a) => { tree.variable.floats.Add(new Float()); });
+        addMenu.menu.AppendAction("Float", (a) => { tree.variables.floats.Add(new Float()); });
 
-        // addMenu.menu.AppendAction("Bool", (a) => { tree.variable.bools.Add(new Bool()); });
+        addMenu.menu.AppendAction("Bool", (a) => { tree.variables.bools.Add(new Bool()); });
 
-        // addMenu.menu.AppendAction("String", (a) => { tree.variable.strings.Add(new String()); });
+        addMenu.menu.AppendAction("String", (a) => { tree.variables.strings.Add(new String()); });
 
     }
 
@@ -187,7 +188,7 @@ public class BehaviourTreeEditor : EditorWindow
             BehaviourTree behaviourTree = AssetDatabase.LoadAssetAtPath<BehaviourTree>(path); // 加载资源对象
             if (behaviourTree != null)
             {
-                assestMenu.menu.AppendAction(behaviourTree.name, (a) =>
+                assestMenu?.menu.AppendAction(behaviourTree.name, (a) =>
                 {
                     Selection.SetActiveObjectWithContext(behaviourTree, behaviourTree);
                 });

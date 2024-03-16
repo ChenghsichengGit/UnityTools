@@ -1,74 +1,135 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEditor.Experimental.GraphView;
 [System.Serializable]
-public class Variable
+public class Variables
 {
     public List<Int> ints;
     public List<Float> floats;
     public List<Bool> bools;
     public List<String> strings;
 
-    public object FindByName(string name)
+    public void SetInt(string name, int value)
     {
-        var i = ints.FirstOrDefault(i => i.name == name);
+        Int variable = ints.FirstOrDefault(i => i.name == name);
 
-        if (i != null)
+        if (variable != null)
         {
-            return i.value;
+            variable.value = value;
+        }
+    }
+
+    public int GetInt(string name)
+    {
+        Int variable = ints.FirstOrDefault(i => i.name == name);
+
+        if (variable != null)
+        {
+            return variable.value;
         }
 
-        var f = floats.FirstOrDefault(f => f.name == name);
+        UnityEngine.Debug.Log("找不到此變數");
+        return 0;
+    }
 
-        if (f != null)
+    public void SetFloat(string name, float value)
+    {
+        Float variable = floats.FirstOrDefault(i => i.name == name);
+
+        if (variable != null)
         {
-            return f.value;
+            variable.value = value;
+        }
+    }
+
+    public float GetFloat(string name)
+    {
+        Float variable = floats.FirstOrDefault(i => i.name == name);
+
+        if (variable != null)
+        {
+            return variable.value;
         }
 
-        var b = bools.FirstOrDefault(b => b.name == name);
+        UnityEngine.Debug.Log("找不到此變數");
+        return 0;
+    }
 
-        if (b != null)
+    public void SetBool(string name, bool value)
+    {
+        Bool variable = bools.FirstOrDefault(i => i.name == name);
+
+        if (variable != null)
         {
-            return b.value;
+            variable.value = value;
+        }
+    }
+
+    public bool GetBool(string name)
+    {
+        Bool variable = bools.FirstOrDefault(i => i.name == name);
+
+        if (variable != null)
+        {
+            return variable.value;
         }
 
-        var s = strings.FirstOrDefault(s => s.name == name);
+        UnityEngine.Debug.Log("找不到此變數");
+        return false;
+    }
 
-        if (s != null)
+    public void SetString(string name, string value)
+    {
+        String variable = strings.FirstOrDefault(i => i.name == name);
+
+        if (variable != null)
         {
-            return s.value;
+            variable.value = value;
+        }
+    }
+
+    public string GetString(string name)
+    {
+        String variable = strings.FirstOrDefault(i => i.name == name);
+
+        if (variable != null)
+        {
+            return variable.value;
         }
 
-        return null;
+        UnityEngine.Debug.Log("找不到此變數");
+        return "";
     }
 }
 
-[System.Serializable]
-public class Int
+public class Variable
 {
     public string name;
+}
+
+[System.Serializable]
+public class Int : Variable
+{
     public int value;
 }
 
 [System.Serializable]
-public class Float
+public class Float : Variable
 {
-    public string name;
     public float value;
 }
 
 [System.Serializable]
-public class Bool
+public class Bool : Variable
 {
-    public string name;
     public bool value;
 }
 
 [System.Serializable]
-public class String
+public class String : Variable
 {
-    public string name;
     public string value;
 }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine;
+using System.IO;
 
 public class BehaviourTreeView : GraphView
 {
@@ -48,29 +49,34 @@ public class BehaviourTreeView : GraphView
         DeleteElements(graphElements);
         graphViewChanged += OnGraphVeiewChanged;
 
-        if (tree.rootNode == null)
+        if (tree)
         {
-            tree.rootNode = tree.CreateNode(typeof(RootNode)) as RootNode;
-            EditorUtility.SetDirty(tree);
-            AssetDatabase.SaveAssets();
+            if (tree.rootNode == null)
+            {
+                tree.rootNode = tree.CreateNode(typeof(RootNode)) as RootNode;
+                EditorUtility.SetDirty(tree);
+                AssetDatabase.SaveAssets();
+            }
+
+
+            // Creates node view
+            tree.nodes.ForEach(n => CreateNodeView(n));
+
+            // Creates edges
+            tree.nodes.ForEach(n =>
+            {
+                var children = tree.GetChildren(n);
+                children.ForEach(c =>
+                {
+                    NodeView parentView = FindNodeView(n);
+                    NodeView childView = FindNodeView(c);
+
+                    Edge edge = parentView.output.ConnectTo(childView.input);
+                    AddElement(edge);
+                });
+            });
         }
 
-        // Creates node view
-        tree.nodes.ForEach(n => CreateNodeView(n));
-
-        // Creates edges
-        tree.nodes.ForEach(n =>
-        {
-            var children = tree.GetChildren(n);
-            children.ForEach(c =>
-            {
-                NodeView parentView = FindNodeView(n);
-                NodeView childView = FindNodeView(c);
-
-                Edge edge = parentView.output.ConnectTo(childView.input);
-                AddElement(edge);
-            });
-        });
     }
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)

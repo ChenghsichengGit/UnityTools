@@ -13,7 +13,6 @@
                 </ui:VisualElement>
                 <ui:VisualElement>
                     <ui:Label text="Variable" display-tooltip-when-elided="true" style="background-color: rgb(37, 37, 37);" />
-                    <ui:ListView focusable="true" />
                     <ui:IMGUIContainer name="variable" />
                 </ui:VisualElement>
             </SplitView>
