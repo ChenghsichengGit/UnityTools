@@ -1,5 +1,5 @@
 #node-border {
-    background-color: rgba(56, 56, 56, 255);
+    background-color: rgb(56, 56, 56);
 }
 
 #input {
@@ -11,10 +11,10 @@
 }
 
 #selection-border {
-    border-left-color: rgba(0, 148, 255, 255);
-    border-right-color: rgba(0, 148, 255, 255);
-    border-top-color: rgba(0, 148, 255, 255);
-    border-bottom-color: rgba(0, 148, 255, 255);
+    border-left-color: rgb(0, 148, 255);
+    border-right-color: rgb(0, 148, 255);
+    border-top-color: rgb(0, 148, 255);
+    border-bottom-color: rgb(0, 148, 255);
     border-left-width: 0;
     border-right-width: 0;
     border-top-width: 0;
@@ -73,23 +73,23 @@
 
 #divider {
     min-height: 1px;
-    background-color: rgba(154, 154, 154, 255);
+    background-color: rgb(154, 154, 154);
 }
 
 .action #input {
-    background-color: rgba(255, 0, 0, 255);
+    background-color: rgb(255, 0, 0);
 }
 
 .composite #input {
-    background-color: rgba(47, 255, 0, 255);
+    background-color: rgb(47, 255, 0);
 }
 
 .decorator #input {
-    background-color: rgba(0, 151, 255, 255);
+    background-color: rgb(0, 151, 255);
 }
 
 .root #input {
-    background-color: rgba(255, 0, 242, 255);
+    background-color: rgb(255, 0, 242);
     min-height: 20px;
 }
 
@@ -112,7 +112,7 @@
 }
 
 .failure #node-state {
-    background-color: rgba(255, 0, 0, 0.43);
+    background-color: rgb(255, 0, 0);
 }
 
 #title-label {

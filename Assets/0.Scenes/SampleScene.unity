@@ -1933,7 +1933,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 954554102}
-  m_LocalRotation: {x: 0.000000022351742, y: -0.000000031883488, z: 0.000000007970871, w: 1}
+  m_LocalRotation: {x: -0.000000022351742, y: -1.2122968e-15, z: 7.70619e-17, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2020,7 +2020,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.12218327, y: -0.000000015232345, z: 0.0000000018751876, w: 0.9925076}
+  m_LocalRotation: {x: 0.122183256, y: 7.8577214e-16, z: -2.9368244e-16, w: 0.9925076}
   m_LocalPosition: {x: 0, y: 4, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2403,6 +2403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behaviourTreeRunner: {fileID: 1064570135}
+  player: {fileID: 0}
 --- !u!4 &1091619254 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4877178614144928, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
@@ -4465,7 +4466,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912146321}
-  m_LocalRotation: {x: -0, y: -2.2656188e-10, z: 5.6640026e-11, w: 1}
+  m_LocalRotation: {x: -0.000000022351742, y: -9.052876e-16, z: 4.769708e-16, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5068,7 +5069,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093518916}
-  m_LocalRotation: {x: 0.000000037252903, y: -0.000000044910937, z: 0.000000011227734, w: 1}
+  m_LocalRotation: {x: -0.000000007450581, y: 0.00000001053075, z: -0.0000000026326872, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

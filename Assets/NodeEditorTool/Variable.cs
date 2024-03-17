@@ -3,6 +3,12 @@ using System.Diagnostics;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEditor.Experimental.GraphView;
+
+public enum VariableType
+{
+    Int, Float, String, Bool
+}
+
 [System.Serializable]
 public class Variables
 {

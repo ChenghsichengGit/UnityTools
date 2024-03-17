@@ -18,7 +18,6 @@ public class DebugLogNode : ActionNode
     protected override State OnUpdate()
     {
         Debug.Log($"OnUpdate{message}");
-        variables.SetInt("a", variables.GetInt("a") + 1);
         Debug.Log(variables.GetInt("a"));
 
         return State.Success;
