@@ -42,7 +42,7 @@ MonoBehaviour:
   state: 0
   started: 1
   guid: 563aa1c55bda3f04391d7e4100765c2c
-  position: {x: 152.66669, y: 321.3333}
+  position: {x: 152.66666, y: 321.33334}
   variables:
     ints: []
     floats: []

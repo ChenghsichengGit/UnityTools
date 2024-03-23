@@ -20,6 +20,8 @@ public class BehaviourTreeEditor : EditorWindow
     ToolbarMenu assestMenu;
     ToolbarMenu addMenu;
 
+    ListView listView;
+
     SerializedObject treeObject;
     SerializedProperty variableProperty;
 

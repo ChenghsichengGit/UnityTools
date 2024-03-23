@@ -2,7 +2,6 @@
     <Style src="project://database/Assets/NodeEditorTool/BehaviourTreeEditor/BehaviourTreeEditor.uss?fileID=7433441132597879392&amp;guid=c46173ed27a26b240b3c34637cb2a4f6&amp;type=3#BehaviourTreeEditor" />
     <uie:Toolbar>
         <uie:ToolbarMenu display-tooltip-when-elided="true" text="Assest" name="AssestMenu" />
-        <uie:ToolbarMenu display-tooltip-when-elided="true" text="+" name="AddMenu" style="-unity-font-style: normal; font-size: 20px; -unity-text-align: upper-left;" />
     </uie:Toolbar>
     <SplitView fixed-pane-index="0" fixed-pane-initial-dimension="300">
         <ui:VisualElement name="left-panel" tabindex="0">
@@ -11,9 +10,12 @@
                     <ui:Label text="Inspector" display-tooltip-when-elided="true" name="Label" style="background-color: rgb(37, 37, 37);" />
                     <InspectorView name="InspectorView" />
                 </ui:VisualElement>
-                <ui:VisualElement>
-                    <ui:Label text="Variable" display-tooltip-when-elided="true" style="background-color: rgb(37, 37, 37);" />
-                    <ui:IMGUIContainer name="variable" />
+                <ui:VisualElement style="background-color: rgb(56, 56, 56);">
+                    <SplitView fixed-pane-initial-dimension="30" fixed-pane-index="1" style="opacity: 1; left: auto; bottom: auto; height: auto; max-height: 20px; min-height: auto;">
+                        <ui:Label text="Variable" display-tooltip-when-elided="true" style="background-color: rgb(37, 37, 37); justify-content: flex-start; -unity-text-align: middle-left;" />
+                        <uie:ToolbarMenu display-tooltip-when-elided="true" text="+" name="AddMenu" style="-unity-font-style: normal; font-size: 20px; -unity-text-align: upper-left; max-width: 40px;" />
+                    </SplitView>
+                    <ui:IMGUIContainer name="variable" style="background-color: rgb(56, 56, 56);" />
                 </ui:VisualElement>
             </SplitView>
         </ui:VisualElement>
