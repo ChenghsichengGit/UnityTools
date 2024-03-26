@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace AStar
 {
     public class Grid : MonoBehaviour
     {
+        public bool onlyDisplayPathGizmos;
         public LayerMask unwalkableMask;
         public Vector2 gridWorldSize;
         public float nodeRadius;
@@ -21,6 +23,14 @@ namespace AStar
             gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
             gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
             CreateGrid();
+        }
+
+        public int MaxSize
+        {
+            get
+            {
+                return gridSizeX * gridSizeY;
+            }
         }
 
         private void CreateGrid()
@@ -77,23 +87,39 @@ namespace AStar
         }
 
         public List<Node> path;
+
+
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
 
+            if (onlyDisplayPathGizmos)
+            {
+                if (path != null)
+                {
+                    foreach (Node n in path)
+                    {
+                        Gizmos.color = Color.black;
+                        Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                    }
+                }
+            }
+            else
             if (grid != null)
             {
-                foreach (Node n in grid)
                 {
-                    Gizmos.color = (n.walkable) ? Color.white : Color.red;
-                    if (path != null)
+                    foreach (Node n in grid)
                     {
-                        if (path.Contains(n))
+                        Gizmos.color = (n.walkable) ? Color.white : Color.red;
+                        if (path != null)
                         {
-                            Gizmos.color = Color.black;
+                            if (path.Contains(n))
+                            {
+                                Gizmos.color = Color.black;
+                            }
                         }
+                        Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                     }
-                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                 }
             }
         }
