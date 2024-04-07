@@ -39,8 +39,8 @@ MonoBehaviour:
   m_Name: SequencerNode
   m_EditorClassIdentifier: 
   nodeName: SequencerNode
-  state: 0
-  started: 1
+  state: 2
+  started: 0
   guid: 563aa1c55bda3f04391d7e4100765c2c
   position: {x: 152.66666, y: 321.33334}
   variables:
@@ -125,7 +125,7 @@ MonoBehaviour:
   state: 1
   started: 0
   guid: b953d1ef73733c245874897224c99027
-  position: {x: 253.99997, y: 462.66672}
+  position: {x: 271.25003, y: 462.66672}
   variables:
     ints: []
     floats: []
@@ -229,7 +229,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: d2952811c4932a542bd97eb4468f2cc4
-  position: {x: 253.94164, y: 606.6559}
+  position: {x: 271.33334, y: 606.6667}
   variables:
     ints: []
     floats: []
@@ -250,10 +250,10 @@ MonoBehaviour:
   m_Name: JudgeNode
   m_EditorClassIdentifier: 
   nodeName: JudgeNode
-  state: 0
+  state: 2
   started: 0
   guid: 2695467a60e731147b8422e5603705bb
-  position: {x: 46, y: 462.66672}
+  position: {x: 45.999996, y: 462.66672}
   variables:
     ints: []
     floats: []
