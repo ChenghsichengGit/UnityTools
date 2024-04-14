@@ -6,6 +6,11 @@ public class RootNode : Node
 {
     public Node child;
 
+    public RootNode() : base()
+    {
+        state = State.Running;
+    }
+
     protected override void OnStart()
     {
     }

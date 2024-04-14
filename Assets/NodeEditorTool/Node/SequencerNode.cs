@@ -24,8 +24,7 @@ public class SequencerNode : CompositeNode
             case State.Running:
                 return State.Running;
             case State.Failure:
-                current++;
-                break;
+                return State.Failure;
             case State.Success:
                 current++;
                 break;
