@@ -20,8 +20,6 @@ public class BehaviourTreeEditor : EditorWindow
     ToolbarMenu assestMenu;
     ToolbarMenu addMenu;
 
-    ListView listView;
-
     SerializedObject treeObject;
     SerializedProperty variableProperty;
 
@@ -47,10 +45,10 @@ public class BehaviourTreeEditor : EditorWindow
     {
         VisualElement root = rootVisualElement;
 
-        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/NodeEditorTool/BehaviourTreeEditor/BehaviourTreeEditor.uxml");
+        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(BehaviourTreeUtility.BehaviourTreeEditorScriptFolderPath() + "BehaviourTreeEditor.uxml");
         visualTree.CloneTree(root);
 
-        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/NodeEditorTool/BehaviourTreeEditor/BehaviourTreeEditor.uss");
+        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(BehaviourTreeUtility.BehaviourTreeEditorScriptFolderPath() + "BehaviourTreeEditor.uss");
         root.styleSheets.Add(styleSheet);
 
         // 实例化 treeView
