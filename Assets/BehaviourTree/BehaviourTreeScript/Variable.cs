@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Sirenix.OdinInspector;
 using UnityEditor.Experimental.GraphView;
 
 public enum VariableType
