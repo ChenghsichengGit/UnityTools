@@ -9,38 +9,52 @@ namespace AStar
 {
     public class Grid : MonoBehaviour
     {
+        // 是否顯示網格Gizmos
         public bool displayGridGizmos;
+        // 不可行走區域的LayerMask
         public LayerMask unwalkableMask;
+        // 網格的世界大小
         public Vector2 gridWorldSize;
+        // 節點半徑
         public float nodeRadius;
+        // 可行走區域的地形類型和相應的代價
         public TerrainType[] walkableRegions;
+        // 障礙物附近的代價
         public int obstacleProximityPenalty = 10;
+        // 可行走區域的LayerMask
         LayerMask walkableMask;
-        Dictionary<int, int> walkableRegionsDicuionary = new Dictionary<int, int>();
+        // 可行走區域的字典，用於存儲每個LayerMask對應的代價
+        Dictionary<int, int> walkableRegionsDictionary = new Dictionary<int, int>();
 
+        // 網格中的節點
         Node[,] grid;
 
+        // 節點直徑、網格大小
         float nodeDiameter;
         int gridSizeX, gridSizeY;
 
+        // 代價的最小值和最大值
         int penaltyMin = int.MaxValue;
         int penaltyMax = int.MinValue;
 
         private void Awake()
         {
+            // 計算節點直徑和網格大小
             nodeDiameter = nodeRadius * 2;
             gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
             gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
 
+            // 初始化可行走區域的LayerMask和對應的代價字典
             foreach (TerrainType region in walkableRegions)
             {
                 walkableMask.value = walkableMask |= region.terrainMask.value;
-                walkableRegionsDicuionary.Add((int)Mathf.Log(region.terrainMask.value, 2), region.terrainPanalty);
+                walkableRegionsDictionary.Add((int)Mathf.Log(region.terrainMask.value, 2), region.terrainPanalty);
             }
 
             CreateGrid();
         }
 
+        // 網格的最大大小
         public int MaxSize
         {
             get
@@ -49,11 +63,17 @@ namespace AStar
             }
         }
 
+        /// <summary>
+        /// 創建網格
+        /// </summary>
         private void CreateGrid()
         {
+            // 創建一個新的二維 Node 陣列，用來存儲網格中的所有節點 [長,寬]
             grid = new Node[gridSizeX, gridSizeY];
+            // 計算網格左下角的世界座標
             Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
 
+            // 計算每個節點的位置
             for (int x = 0; x < gridSizeX; x++)
             {
                 for (int y = 0; y < gridSizeY; y++)
@@ -63,11 +83,12 @@ namespace AStar
 
                     int movementPanalty = 0;
 
+                    // 如果射線擊中了物體，則根據物體的圖層來設置移動懲罰值
                     Ray ray = new Ray(worldPoint + Vector3.up * 50, Vector2.down);
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, 100, walkableMask))
                     {
-                        walkableRegionsDicuionary.TryGetValue(hit.collider.gameObject.layer, out movementPanalty);
+                        walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPanalty);
                     }
 
                     if (!walkable)
@@ -75,6 +96,7 @@ namespace AStar
                         movementPanalty += obstacleProximityPenalty;
                     }
 
+                    // 設置網格中該節點的位置
                     grid[x, y] = new Node(walkable, worldPoint, x, y, movementPanalty);
                 }
             }
@@ -82,6 +104,9 @@ namespace AStar
             BlurPenaltyMap(3);
         }
 
+        /// <summary>
+        /// 計算節點權重
+        /// </summary>
         void BlurPenaltyMap(int blurSize)
         {
             int kernelSize = blurSize * 2 + 1;
@@ -139,6 +164,9 @@ namespace AStar
             }
         }
 
+        /// <summary>
+        /// 取得旁邊的節點
+        /// </summary>
         public List<Node> GetNeighbours(Node node)
         {
             List<Node> neighbours = new List<Node>();
@@ -163,6 +191,9 @@ namespace AStar
             return neighbours;
         }
 
+        /// <summary>
+        ///  根據世界座標獲取節點
+        /// </summary>
         public Node GetNodeFromWorldPoint(Vector3 worldPosition)
         {
             float percentX = (worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x;
@@ -178,13 +209,14 @@ namespace AStar
 
         private void OnDrawGizmos()
         {
+            // 顯示範圍
             Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
 
+            // 想是每個節點是否可行走
             if (grid != null && displayGridGizmos)
             {
                 foreach (Node n in grid)
                 {
-
                     Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, n.movementPanalty));
 
                     Gizmos.color = (n.walkable) ? Gizmos.color : Color.red;
@@ -193,6 +225,7 @@ namespace AStar
             }
         }
 
+        // LayerMask類型
         [System.Serializable]
         public class TerrainType
         {
