@@ -7,6 +7,7 @@ using Mono.Cecil.Cil;
 
 namespace AStar
 {
+    // 創建和管理網格系統
     public class Grid : MonoBehaviour
     {
         // 是否顯示網格Gizmos

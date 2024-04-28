@@ -5,16 +5,25 @@ using UnityEngine;
 
 namespace AStar
 {
+    // 使用堆來優化AStar系統，減少系統負擔
     public class Heap<T> where T : IHeapItem<T>
     {
+        // 用於存儲堆中的元素的陣列
         T[] items;
+        // 目前堆中的元素數量
         int currentItemCount;
 
+        /// <summary>
+        /// 初始化堆的容量
+        /// </summary>
         public Heap(int maxHeapSize)
         {
             items = new T[maxHeapSize];
         }
 
+        /// <summary>
+        /// 將一個元素添加到堆中
+        /// </summary>
         public void Add(T item)
         {
             item.HeapIndex = currentItemCount;
@@ -23,6 +32,9 @@ namespace AStar
             currentItemCount++;
         }
 
+        /// <summary>
+        /// 移除並返回堆中最小的元素
+        /// </summary>
         public T RemoveFirst()
         {
             T firstItem = items[0];
@@ -38,6 +50,7 @@ namespace AStar
             SortUp(item);
         }
 
+        // 堆中元素的數量
         public int Count
         {
             get
@@ -46,11 +59,13 @@ namespace AStar
             }
         }
 
+        // 檢查堆中是否包含指定的元素
         public bool Contains(T item)
         {
             return Equals(items[item.HeapIndex], item);
         }
 
+        // 向下排序操作，保證堆的結構仍然符合最小堆的要求
         void SortDown(T item)
         {
             while (true)
@@ -87,6 +102,7 @@ namespace AStar
             }
         }
 
+        // 向上排序操作，保證堆的結構仍然符合最小堆的要求
         void SortUp(T item)
         {
             int parentIndex = (item.HeapIndex - 1) / 2;
@@ -107,6 +123,7 @@ namespace AStar
             }
         }
 
+        // 交換兩個元素的位置
         void Swap(T itemA, T itemB)
         {
             items[itemA.HeapIndex] = itemB;
@@ -117,6 +134,7 @@ namespace AStar
         }
     }
 
+    // 讓繼承的腳本可以用list.Sort()排序
     public interface IHeapItem<T> : IComparable<T>
     {
         int HeapIndex

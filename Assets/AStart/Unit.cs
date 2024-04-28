@@ -6,9 +6,12 @@ using UnityEngine;
 
 namespace AStar
 {
+    // 負責處理單位移動
     public class Unit : MonoBehaviour
     {
+        // 最小更新路徑的時間間隔
         const float minPathUpdateTime = .2f;
+        // 移動距離閾值，超過此閾值時觸發路徑更新
         const float pathUpdateMoveThreshold = .5f;
         public Transform target;
         public float speed;
@@ -23,6 +26,9 @@ namespace AStar
             StartCoroutine(UpdatePath());
         }
 
+        /// <summary>
+        /// 當找到新路徑時的回調函數
+        /// </summary>
         public void OnPathFound(Vector3[] wawypoints, bool pathSusccessful)
         {
             if (pathSusccessful)
@@ -33,12 +39,16 @@ namespace AStar
             }
         }
 
+        /// <summary>
+        /// 路徑更新
+        /// </summary>
         IEnumerator UpdatePath()
         {
             if (Time.timeSinceLevelLoad < .3f)
             {
                 yield return new WaitForSeconds(.3f);
             }
+            // 請求新的路徑
             PathRequestManager.RequsetPath(new PathRequest(transform.position, target.position, OnPathFound));
 
             float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
@@ -47,6 +57,8 @@ namespace AStar
             while (true)
             {
                 yield return new WaitForSeconds(minPathUpdateTime);
+
+                // 如果目標位置的移動距離超過閾值，則重新請求路徑
                 if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold)
                 {
                     PathRequestManager.RequsetPath(new PathRequest(transform.position, target.position, OnPathFound));
@@ -55,6 +67,9 @@ namespace AStar
             }
         }
 
+        /// <summary>
+        /// 跟隨路徑並面向移動方向
+        /// </summary>
         IEnumerator FollowPath()
         {
             bool followingPath = true;
