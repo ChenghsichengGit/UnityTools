@@ -6,29 +6,45 @@ using UnityEngine.UIElements;
 
 public class CharacterEditer : MonoBehaviour
 {
-    public GameObject model { get; private set; }
-    public float radius { get; private set; }
-    public float height { get; private set; }
-    public Vector3 modelPos { get; private set; }
-
+    public GameObject model;
+    public Vector3 modelPos;
     public ColliderType colliderType;
+
+    public Vector3 colliderCenter;
+    public Vector3 boxSize;
+    public float capsuleRadius;
+    public float capsuleHeight;
+    public float sphereRadius;
 
     private GameObject modelObj;
 
     private CharacterController controller;
-    private Collider myCollider;
 
-    public void SetProperties(GameObject _model, float _radius, float _height, ColliderType _colliderType)
-    {
-        SetProperties(_model, _radius, _height, _colliderType, Vector3.zero);
-    }
-
-    public void SetProperties(GameObject _model, float _radius, float _height, ColliderType _colliderType, Vector3 _modelPos)
+    public void SetProperties(GameObject _model, ColliderType _colliderType, Vector3 _colliderCenter, Vector3 _boxSize, Vector3 _modelPos)
     {
         model = _model;
-        radius = _radius;
-        height = _height;
         colliderType = _colliderType;
+        colliderCenter = _colliderCenter;
+        boxSize = _boxSize;
+        modelPos = _modelPos;
+    }
+
+    public void SetProperties(GameObject _model, ColliderType _colliderType, Vector3 _colliderCenter, float _capsuleRadius, float _capsuleHeight, Vector3 _modelPos)
+    {
+        model = _model;
+        colliderType = _colliderType;
+        colliderCenter = _colliderCenter;
+        capsuleRadius = _capsuleRadius;
+        capsuleHeight = _capsuleHeight;
+        modelPos = _modelPos;
+    }
+
+    public void SetProperties(GameObject _model, ColliderType _colliderType, Vector3 _colliderCenter, float _sphereRadius, Vector3 _modelPos)
+    {
+        model = _model;
+        colliderType = _colliderType;
+        colliderCenter = _colliderCenter;
+        sphereRadius = _sphereRadius;
         modelPos = _modelPos;
     }
 
@@ -68,31 +84,22 @@ public class CharacterEditer : MonoBehaviour
 
         switch (colliderType)
         {
-            case ColliderType.Sphere:
-                myCollider = gameObject.AddComponent<SphereCollider>();
+            case ColliderType.Box:
+                BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
+                boxCollider.size = boxSize;
+                boxCollider.center = colliderCenter;
                 break;
             case ColliderType.Capsule:
-                myCollider = gameObject.AddComponent<CapsuleCollider>();
+                CapsuleCollider capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
+                capsuleCollider.height = capsuleHeight;
+                capsuleCollider.radius = capsuleRadius;
+                capsuleCollider.center = colliderCenter;
                 break;
-            case ColliderType.Box:
-                myCollider = gameObject.AddComponent<BoxCollider>();
+            case ColliderType.Sphere:
+                SphereCollider sphereCollider = gameObject.AddComponent<SphereCollider>();
+                sphereCollider.radius = sphereRadius;
+                sphereCollider.center = colliderCenter;
                 break;
         }
-
-        // if (!controller || !myCollider) return;
-
-        // if (height > 0)
-        // {
-        //     controller.height = height;
-        //     myCollider.height = height;
-        // }
-        // if (radius > 0)
-        // {
-        //     controller.radius = radius;
-        //     myCollider.radius = radius;
-        // }
-
-        // controller.center = new Vector3(0, controller.height / 2, 0);
-        // myCollider.center = new Vector3(0, controller.height / 2, 0);
     }
 }
