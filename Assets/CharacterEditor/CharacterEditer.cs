@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SceneManagement;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CharacterEditer : MonoBehaviour
 {
@@ -16,59 +13,66 @@ public class CharacterEditer : MonoBehaviour
     public float capsuleHeight;
     public float sphereRadius;
 
-    private GameObject modelObj;
-
     private CharacterController controller;
+    public Vector3 controllerCenter;
+    public float controllerRadius;
+    public float controllerHeight;
 
-    public void SetProperties(GameObject _model, ColliderType _colliderType, Vector3 _colliderCenter, Vector3 _boxSize, Vector3 _modelPos)
+    public void SetModel(GameObject _model, Vector3 _modelPos)
     {
         model = _model;
-        colliderType = _colliderType;
-        colliderCenter = _colliderCenter;
-        boxSize = _boxSize;
         modelPos = _modelPos;
     }
 
-    public void SetProperties(GameObject _model, ColliderType _colliderType, Vector3 _colliderCenter, float _capsuleRadius, float _capsuleHeight, Vector3 _modelPos)
+    public void SetCollider(ColliderType _colliderType, Vector3 _colliderCenter, Vector3 _boxSize)
     {
-        model = _model;
+        colliderType = _colliderType;
+        colliderCenter = _colliderCenter;
+        boxSize = _boxSize;
+    }
+
+    public void SetCollider(ColliderType _colliderType, Vector3 _colliderCenter, float _capsuleRadius, float _capsuleHeight)
+    {
         colliderType = _colliderType;
         colliderCenter = _colliderCenter;
         capsuleRadius = _capsuleRadius;
         capsuleHeight = _capsuleHeight;
-        modelPos = _modelPos;
     }
 
-    public void SetProperties(GameObject _model, ColliderType _colliderType, Vector3 _colliderCenter, float _sphereRadius, Vector3 _modelPos)
+    public void SetCollider(ColliderType _colliderType, Vector3 _colliderCenter, float _sphereRadius)
     {
-        model = _model;
         colliderType = _colliderType;
         colliderCenter = _colliderCenter;
         sphereRadius = _sphereRadius;
-        modelPos = _modelPos;
+    }
+
+    public void SetController(Vector3 _controllerCenter, float _controllerRadius, float _controllerHeight)
+    {
+        controllerCenter = _controllerCenter;
+        controllerRadius = _controllerRadius;
+        controllerHeight = _controllerHeight;
     }
 
     public void SetObject()
     {
+        // 設定碰撞框
+        SetCollider();
+
         // 設定模型
         SetModel();
 
-        // 設定碰撞框
-        SetCollider();
+        Object parentObject = PrefabUtility.GetCorrespondingObjectFromSource(gameObject);
+        if (parentObject)
+        {
+            PrefabUtility.ApplyPrefabInstance(gameObject, InteractionMode.AutomatedAction);
+        }
 
         Debug.Log("角色設定完成");
     }
 
     private void SetModel()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Debug.Log(i + transform.GetChild(i).name);
-            DestroyImmediate(transform.GetChild(i).gameObject);
-        }
-
-        modelObj = Instantiate(model, transform);
-        modelObj.transform.position = modelPos;
+        model.transform.position = transform.position + modelPos;
     }
 
     private void SetCollider()
@@ -79,8 +83,6 @@ public class CharacterEditer : MonoBehaviour
         {
             DestroyImmediate(collider);
         }
-
-        controller = gameObject.AddComponent<CharacterController>();
 
         switch (colliderType)
         {
@@ -101,5 +103,10 @@ public class CharacterEditer : MonoBehaviour
                 sphereCollider.center = colliderCenter;
                 break;
         }
+
+        controller = gameObject.AddComponent<CharacterController>();
+        controller.center = controllerCenter;
+        controller.radius = controllerRadius;
+        controller.height = controllerHeight;
     }
 }

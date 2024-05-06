@@ -22,6 +22,7 @@ public class CharacterEditorWindow : EditorWindow
     }
 
     bool colliderFoldout = false;
+    bool characterControllerFoldout = false;
 
     private void OnGUI()
     {
@@ -37,8 +38,9 @@ public class CharacterEditorWindow : EditorWindow
         Selection.activeGameObject = EditorGUILayout.ObjectField(Selection.activeGameObject, typeof(CharacterEditer), true) as GameObject;
         GameObject model = EditorGUILayout.ObjectField("Model: ", character.model, typeof(GameObject), true) as GameObject;
         Vector3 modelPos = EditorGUILayout.Vector3Field("ModelPos", character.modelPos);
+        character.SetModel(model, modelPos);
 
-        colliderFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(colliderFoldout, "Collider", null, FoldoutHeaderGroupMenuList);
+        colliderFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(colliderFoldout, "Collider");
         if (colliderFoldout)
         {
             ColliderType colliderType = (ColliderType)EditorGUILayout.EnumPopup("colliderType", character.colliderType);
@@ -48,18 +50,28 @@ public class CharacterEditorWindow : EditorWindow
             {
                 case ColliderType.Box:
                     Vector3 boxSize = EditorGUILayout.Vector3Field("Size", character.boxSize);
-                    character.SetProperties(model, colliderType, colliderCenter, boxSize, modelPos);
+                    character.SetCollider(colliderType, colliderCenter, boxSize);
                     break;
                 case ColliderType.Capsule:
                     float radius = EditorGUILayout.FloatField("Radius:", character.capsuleRadius);
                     float height = EditorGUILayout.FloatField("Height:", character.capsuleHeight);
-                    character.SetProperties(model, colliderType, colliderCenter, radius, height, modelPos);
+                    character.SetCollider(colliderType, colliderCenter, radius, height);
                     break;
                 case ColliderType.Sphere:
                     float sphereRadius = EditorGUILayout.FloatField("Radius", character.sphereRadius);
-                    character.SetProperties(model, colliderType, colliderCenter, sphereRadius, modelPos);
+                    character.SetCollider(colliderType, colliderCenter, sphereRadius);
                     break;
             }
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        characterControllerFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(characterControllerFoldout, "CharacterController");
+        if (characterControllerFoldout)
+        {
+            Vector3 controllerCenter = EditorGUILayout.Vector3Field("Center", character.controllerCenter);
+            float radius = EditorGUILayout.FloatField("Radius:", character.controllerRadius);
+            float height = EditorGUILayout.FloatField("Height:", character.controllerHeight);
+            character.SetController(controllerCenter, radius, height);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
@@ -75,17 +87,5 @@ public class CharacterEditorWindow : EditorWindow
         Selection.selectionChanged -= OnSelectionChanged;
         Repaint();
         Selection.selectionChanged += OnSelectionChanged;
-    }
-
-    private void FoldoutHeaderGroupMenuList(Rect rect)
-    {
-        var menu = new GenericMenu();
-        menu.AddItem(new GUIContent("Test"), false, Test);
-        menu.DropDown(rect);
-    }
-
-    private void Test()
-    {
-        Debug.Log("Test");
     }
 }
