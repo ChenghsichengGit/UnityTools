@@ -19,23 +19,32 @@ public class CharacterEditorWindow : EditorWindow
     private void CreateGUI()
     {
         Selection.selectionChanged += OnSelectionChanged;
+        OnSelectionChanged();
     }
+    CharacterEditer selectionObj;
 
     bool colliderFoldout = false;
     bool characterControllerFoldout = false;
+    bool useControllerToggle = false;
 
     private void OnGUI()
     {
-        if (!Selection.activeGameObject?.GetComponent<CharacterEditer>())
+        selectionObj = EditorGUILayout.ObjectField("", selectionObj, typeof(CharacterEditer), true) as CharacterEditer;
+
+        if (!selectionObj)
         {
-            EditorGUILayout.ObjectField(null, typeof(GameObject), true);
+            EditorGUILayout.LabelField("No object selected.", EditorStyles.boldLabel);
+            return;
+        }
+
+        if (!selectionObj.gameObject.scene.IsValid())
+        {
+            EditorGUILayout.LabelField(selectionObj.name + " is in the Project.", EditorStyles.boldLabel);
             return;
         }
 
         CharacterEditer character;
-
-        character = Selection.activeGameObject.GetComponent<CharacterEditer>();
-        Selection.activeGameObject = EditorGUILayout.ObjectField(Selection.activeGameObject, typeof(CharacterEditer), true) as GameObject;
+        character = selectionObj.GetComponent<CharacterEditer>();
         GameObject model = EditorGUILayout.ObjectField("Model: ", character.model, typeof(GameObject), true) as GameObject;
         Vector3 modelPos = EditorGUILayout.Vector3Field("ModelPos", character.modelPos);
         character.SetModel(model, modelPos);
@@ -65,6 +74,7 @@ public class CharacterEditorWindow : EditorWindow
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
+        useControllerToggle = EditorGUILayout.BeginToggleGroup("UseCharacterController", useControllerToggle);
         characterControllerFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(characterControllerFoldout, "CharacterController");
         if (characterControllerFoldout)
         {
@@ -74,6 +84,7 @@ public class CharacterEditorWindow : EditorWindow
             character.SetController(controllerCenter, radius, height);
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
+        EditorGUILayout.EndToggleGroup();
 
         if (GUILayout.Button("SetObject"))
         {
@@ -85,6 +96,12 @@ public class CharacterEditorWindow : EditorWindow
     private void OnSelectionChanged()
     {
         Selection.selectionChanged -= OnSelectionChanged;
+
+        if (Selection.activeGameObject?.GetComponent<CharacterEditer>())
+        {
+            selectionObj = Selection.activeGameObject.GetComponent<CharacterEditer>();
+        }
+
         Repaint();
         Selection.selectionChanged += OnSelectionChanged;
     }

@@ -13,6 +13,7 @@ public class CharacterEditer : MonoBehaviour
     public float capsuleHeight;
     public float sphereRadius;
 
+    private bool useController;
     private CharacterController controller;
     public Vector3 controllerCenter;
     public float controllerRadius;
@@ -46,8 +47,14 @@ public class CharacterEditer : MonoBehaviour
         sphereRadius = _sphereRadius;
     }
 
+    public void SetController(bool _useController)
+    {
+        useController = _useController;
+    }
+
     public void SetController(Vector3 _controllerCenter, float _controllerRadius, float _controllerHeight)
     {
+        useController = true;
         controllerCenter = _controllerCenter;
         controllerRadius = _controllerRadius;
         controllerHeight = _controllerHeight;
@@ -72,7 +79,8 @@ public class CharacterEditer : MonoBehaviour
 
     private void SetModel()
     {
-        model.transform.position = transform.position + modelPos;
+        if (model)
+            model.transform.localPosition = modelPos;
     }
 
     private void SetCollider()
@@ -104,9 +112,12 @@ public class CharacterEditer : MonoBehaviour
                 break;
         }
 
-        controller = gameObject.AddComponent<CharacterController>();
-        controller.center = controllerCenter;
-        controller.radius = controllerRadius;
-        controller.height = controllerHeight;
+        if (useController)
+        {
+            controller = gameObject.AddComponent<CharacterController>();
+            controller.center = controllerCenter;
+            controller.radius = controllerRadius;
+            controller.height = controllerHeight;
+        }
     }
 }
