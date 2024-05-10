@@ -56,8 +56,7 @@ public class JudgeNode : DecoratorNode
         {
             if (a > b)
             {
-                child.Update();
-                return State.Running;
+                return child.Update();
             }
             else
                 return State.Failure;
@@ -67,8 +66,7 @@ public class JudgeNode : DecoratorNode
         {
             if (a == b)
             {
-                child.Update();
-                return State.Running;
+                return child.Update();
             }
             else
                 return State.Failure;
@@ -78,8 +76,7 @@ public class JudgeNode : DecoratorNode
         {
             if (a < b)
             {
-                child.Update();
-                return State.Running;
+                return child.Update();
             }
             else
                 return State.Failure;
@@ -97,8 +94,7 @@ public class JudgeNode : DecoratorNode
         {
             if (a > b)
             {
-                child.Update();
-                return State.Success;
+                return child.Update();
             }
             else
                 return State.Failure;
@@ -108,8 +104,7 @@ public class JudgeNode : DecoratorNode
         {
             if (a == b)
             {
-                child.Update();
-                return State.Success;
+                return child.Update();
             }
             else
                 return State.Failure;
@@ -119,8 +114,7 @@ public class JudgeNode : DecoratorNode
         {
             if (a < b)
             {
-                child.Update();
-                return State.Success;
+                return child.Update();
             }
             else
                 return State.Failure;
@@ -138,8 +132,7 @@ public class JudgeNode : DecoratorNode
         {
             if (a == b)
             {
-                child.Update();
-                return State.Success;
+                return child.Update();
             }
             else
                 return State.Failure;
