@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class BehaviourTreeRunner : MonoBehaviour
+public abstract class BehaviourTreeRunner : MonoBehaviour
 {
     public BehaviourTree tree;
     public Animator animator;
@@ -13,10 +13,16 @@ public class BehaviourTreeRunner : MonoBehaviour
         tree = tree.Clone();
         tree.animator = this.animator;
         tree.Bind();
+
+        OnStart();
     }
 
     void Update()
     {
         tree.Update();
+        OnUpdate();
     }
+
+    public abstract void OnStart();
+    public abstract void OnUpdate();
 }

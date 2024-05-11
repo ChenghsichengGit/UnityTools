@@ -13,7 +13,7 @@ public abstract class Node : ScriptableObject
 
     public string nodeName;
 
-    [HideInInspector] public State state = State.Failure;
+    [HideInInspector] public State state = State.Running;
     [HideInInspector] public bool started = false;
     [HideInInspector] public string guid;
     [HideInInspector] public Vector2 position;
@@ -33,8 +33,7 @@ public abstract class Node : ScriptableObject
 
         if (state == State.Failure || state == State.Success)
         {
-            OnStop();
-            started = false;
+            StopNode();
         }
 
         return state;
@@ -49,21 +48,30 @@ public abstract class Node : ScriptableObject
     protected abstract void OnStop();
     protected abstract State OnUpdate();
 
+    public void StopNode()
+    {
+        OnStop();
+        started = false;
+        OnStopNode();
+    }
+
+    protected virtual void OnStopNode() { }
+
     protected float GetNormalizedTime(Animator animator)
     {
         return GetNormalizedTime(animator, "");
     }
 
-    protected float GetNormalizedTime(Animator animator, string tagName)
+    protected float GetNormalizedTime(Animator animator, string animatorName)
     {
         AnimatorStateInfo currentInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextInfo = animator.GetNextAnimatorStateInfo(0);
 
-        if (animator.IsInTransition(0) && nextInfo.IsTag(tagName))
+        if (animator.IsInTransition(0) && nextInfo.IsName(animatorName))
         {
             return nextInfo.normalizedTime;
         }
-        else if (!animator.IsInTransition(0) && currentInfo.IsTag(tagName))
+        else if (!animator.IsInTransition(0) && currentInfo.IsName(animatorName))
         {
             return currentInfo.normalizedTime;
         }

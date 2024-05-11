@@ -53,6 +53,7 @@ public class BehaviourTreeView : GraphView
             if (tree.rootNode == null)
             {
                 tree.rootNode = tree.CreateNode(typeof(RootNode)) as RootNode;
+                tree.rootNode.nodeName = "RootNode";
                 EditorUtility.SetDirty(tree);
                 AssetDatabase.SaveAssets();
             }

@@ -14,9 +14,10 @@ public class JudgeNode : DecoratorNode
     [SerializeField] JudgeType judgeType;
     public string compareVariable;
 
+    public bool canBreak;
+
     protected override void OnStart()
     {
-
     }
 
     protected override void OnStop()
@@ -25,11 +26,8 @@ public class JudgeNode : DecoratorNode
 
     protected override State OnUpdate()
     {
-        if (child.state == State.Running)
-        {
-            child.Update();
-            return State.Running;
-        }
+        if (child.state == State.Running && !canBreak)
+            return child.Update();
 
         if (variableType == VariableType.Int)
         {
@@ -58,8 +56,7 @@ public class JudgeNode : DecoratorNode
             {
                 return child.Update();
             }
-            else
-                return State.Failure;
+            return State.Failure;
         }
 
         if (judgeType == JudgeType.equal)

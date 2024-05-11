@@ -30,7 +30,6 @@ public class SequencerNode : CompositeNode
                 current++;
                 break;
         }
-
         return current == children.Count ? State.Success : State.Running;
     }
 }

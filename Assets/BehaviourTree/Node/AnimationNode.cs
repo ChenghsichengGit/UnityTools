@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class AnimationNode : ActionNode
 {
-    private AnimatorClipInfo[] clipInfo;
-
     public string animationName;
     public float exitTime = 1;
-
 
     protected override void OnStart()
     {
@@ -21,11 +18,11 @@ public class AnimationNode : ActionNode
 
     protected override State OnUpdate()
     {
-        if (GetNormalizedTime(animator) < exitTime)
+        if (GetNormalizedTime(animator, animationName) >= exitTime)
         {
-            return State.Running;
+            return State.Success;
         }
 
-        return State.Success;
+        return State.Running;
     }
 }

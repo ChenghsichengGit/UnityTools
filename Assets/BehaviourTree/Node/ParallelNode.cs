@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class ParallelNode : CompositeNode
 {
-    int current;
 
     protected override void OnStart()
     {
-        current = 0;
     }
 
     protected override void OnStop()
@@ -17,21 +15,11 @@ public class ParallelNode : CompositeNode
 
     protected override State OnUpdate()
     {
-        var child = children[current];
-
-        switch (child.Update())
+        for (int i = 0; i < children.Count; i++)
         {
-            case State.Running:
-                current++;
-                break;
-            case State.Failure:
-                current++;
-                break;
-            case State.Success:
-                current++;
-                break;
+            children[i].Update();
         }
 
-        return current == children.Count ? State.Success : State.Running;
+        return State.Running;
     }
 }

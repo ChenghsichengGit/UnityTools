@@ -18,6 +18,7 @@ public class WaitNode : ActionNode
 
     protected override State OnUpdate()
     {
+        Debug.Log(Time.time - startTime);
         if (Time.time - startTime > duration)
         {
             return State.Success;

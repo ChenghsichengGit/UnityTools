@@ -1,0 +1,221 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7252683631592003411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392c6a7d7c5528a44be15e51570e2d54, type: 3}
+  m_Name: AnimationNode
+  m_EditorClassIdentifier: 
+  nodeName: AnimationNode
+  state: 0
+  started: 0
+  guid: 4fb49137fda251943b8b7088dda40cba
+  position: {x: -131.99998, y: 519.3333}
+  variables:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
+  animator: {fileID: 0}
+  description: 
+  animationName: Idle
+  exitTime: 0.99
+--- !u!114 &-6076529151653201516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7524598b961eb124fa04dbb508053601, type: 3}
+  m_Name: RootNode
+  m_EditorClassIdentifier: 
+  nodeName: RootNode
+  state: 0
+  started: 0
+  guid: 3e4ac1710759f9f4cb6a731095caa069
+  position: {x: 0, y: 0}
+  variables:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
+  animator: {fileID: 0}
+  description: 
+  child: {fileID: -4798911542894005583}
+--- !u!114 &-4798911542894005583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57952fa3e221a6f4eb477b2b51b8c04f, type: 3}
+  m_Name: RepeatNode
+  m_EditorClassIdentifier: 
+  nodeName: RepeatNode
+  state: 1
+  started: 0
+  guid: f512873be42872247a95c15d4e1c0636
+  position: {x: 0, y: 115}
+  variables:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
+  animator: {fileID: 0}
+  description: 
+  child: {fileID: 80465416099129076}
+--- !u!114 &-1253571423934624524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392c6a7d7c5528a44be15e51570e2d54, type: 3}
+  m_Name: AnimationNode
+  m_EditorClassIdentifier: 
+  nodeName: AnimationNode
+  state: 0
+  started: 0
+  guid: 4c9a6cb1f28da7c42b7353a813d475d5
+  position: {x: 74.33344, y: 519.3333}
+  variables:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
+  animator: {fileID: 0}
+  description: 
+  animationName: Attack01
+  exitTime: 0.99
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a9b44d70309454e9f08a90bd2dafc1, type: 3}
+  m_Name: Enemy01
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: -6076529151653201516}
+  treeState: 0
+  nodes:
+  - {fileID: -6076529151653201516}
+  - {fileID: -4798911542894005583}
+  - {fileID: 80465416099129076}
+  - {fileID: -7252683631592003411}
+  - {fileID: -1253571423934624524}
+  - {fileID: 1595743808761915131}
+  - {fileID: 3140430511573621136}
+  variables:
+    ints: []
+    floats:
+    - name: PlayerDir
+      value: 0
+    bools: []
+    strings: []
+  animator: {fileID: 0}
+--- !u!114 &80465416099129076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dfba2a2d828d6f459bd1eabdbe2e57f, type: 3}
+  m_Name: SequencerNode
+  m_EditorClassIdentifier: 
+  nodeName: SequencerNode
+  state: 1
+  started: 0
+  guid: 35a5771b1397edd4f8d6731192b30b83
+  position: {x: -0.99992436, y: 239.63338}
+  variables:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
+  animator: {fileID: 0}
+  description: 
+  children:
+  - {fileID: 1595743808761915131}
+  - {fileID: 3140430511573621136}
+--- !u!114 &1595743808761915131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2b102050ec68f40b219241c3c5ce3b, type: 3}
+  m_Name: JudgeNode
+  m_EditorClassIdentifier: 
+  nodeName: JudgeNode
+  state: 0
+  started: 0
+  guid: 6376e48a2021bb74aa30de7887e3d27f
+  position: {x: -132, y: 383.6667}
+  variables:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
+  animator: {fileID: 0}
+  description: 
+  child: {fileID: -7252683631592003411}
+  variableName: PlayerDir
+  variableType: 1
+  judgeType: 2
+  compareVariable: 4
+  canBreak: 1
+--- !u!114 &3140430511573621136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2b102050ec68f40b219241c3c5ce3b, type: 3}
+  m_Name: JudgeNode
+  m_EditorClassIdentifier: 
+  nodeName: JudgeNode
+  state: 0
+  started: 0
+  guid: 18b1bf6f32998b046bfb16446c86cbf9
+  position: {x: 75, y: 384}
+  variables:
+    ints: []
+    floats: []
+    bools: []
+    strings: []
+  animator: {fileID: 0}
+  description: 
+  child: {fileID: -1253571423934624524}
+  variableName: PlayerDir
+  variableType: 1
+  judgeType: 0
+  compareVariable: 4
+  canBreak: 0

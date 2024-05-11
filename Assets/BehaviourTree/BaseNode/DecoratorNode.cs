@@ -13,4 +13,9 @@ public abstract class DecoratorNode : Node
         node.child = child.Clone();
         return node;
     }
+
+    protected override void OnStopNode()
+    {
+        child.StopNode();
+    }
 }

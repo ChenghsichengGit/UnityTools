@@ -12,4 +12,12 @@ public abstract class CompositeNode : Node
         node.children = children.ConvertAll(c => c.Clone());
         return node;
     }
+
+    protected override void OnStopNode()
+    {
+        for (int i = 0; i < children.Count; i++)
+        {
+            children[i].StopNode();
+        }
+    }
 }
