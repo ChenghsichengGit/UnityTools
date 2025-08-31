@@ -788,8 +788,8 @@ MonoBehaviour:
   - terrainMask:
       serializedVersion: 2
       m_Bits: 2048
-    terrainPanalty: 5
-  obstacleProximityPenalty: 10
+    terrainPanalty: 3
+  obstacleProximityPenalty: 20
 --- !u!114 &1198416578
 MonoBehaviour:
   m_ObjectHideFlags: 0

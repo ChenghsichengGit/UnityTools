@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3207984352731365678}
   - component: {fileID: 3207984352731365681}
-  - component: {fileID: 2402118908301982355}
-  - component: {fileID: 1984605634711334077}
+  - component: {fileID: 6604456414764857382}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -51,14 +50,14 @@ MonoBehaviour:
   modelPos: {x: 0, y: 0, z: 0}
   colliderType: 0
   colliderCenter: {x: 0, y: 1, z: 0}
-  boxSize: {x: 1, y: 1, z: 1}
+  boxSize: {x: 1, y: 2, z: 1}
   capsuleRadius: 0.5
   capsuleHeight: 2
   sphereRadius: 1
   controllerCenter: {x: 0, y: 1, z: 0}
   controllerRadius: 0.5
   controllerHeight: 2
---- !u!65 &2402118908301982355
+--- !u!65 &6604456414764857382
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,25 +68,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!143 &1984605634711334077
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3207984352731365682}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &7341087555121547136
 PrefabInstance:
