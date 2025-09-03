@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86612e168cc3d9478639e80d03c9df8, type: 3}
+  m_Name: KeywordMarkerSetting
+  m_EditorClassIdentifier: Assembly-CSharp::KeywordMarkerSetting
+  keywordMarkers:
+  - keyword: '[A]'
+    markerPrefab: {fileID: 1062113424483224264, guid: 07704f29a1225e34a8fb73b18bc243c3, type: 3}
+  - keyword: '[B]'
+    markerPrefab: {fileID: 1062113424483224264, guid: 3e6a21d7c255a0a479d66698be857a5c, type: 3}
