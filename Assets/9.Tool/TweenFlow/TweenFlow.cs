@@ -22,11 +22,14 @@ namespace Tool.TweenFlow
     {
         [Title("Handle Settings")] [SerializeField]
         private bool playOnAwake = false;
-
         [SerializeField] private bool ignoreTimeScale = false;
+
+        [SerializeField] private bool instant;
 
         private List<Sequence> _sequences = new List<Sequence>();
         private List<float> _delayTimes = new();
+        
+        private bool _isPlaying = false;
 
         [Title("Modules")]
         [ListDrawerSettings(ShowFoldout = true, DraggableItems = true, ListElementLabelName = "DisplayName")]
@@ -35,7 +38,7 @@ namespace Tool.TweenFlow
 
         #region Editor選單
 #if UNITY_EDITOR
-        [Button("Add")]
+        [Button("Add", ButtonSizes.Medium)]
         [HorizontalGroup("Row1")]
         private void ShowMenu()
         {
@@ -69,7 +72,7 @@ namespace Tool.TweenFlow
             }
         }
 
-        [Button("Clear")]
+        [Button("Clear", ButtonSizes.Medium)]
         [HorizontalGroup("Row1", Width = 60)]
         public void ClearDynamic()
         {
@@ -122,10 +125,21 @@ namespace Tool.TweenFlow
             }
         }
 
-        [Button]
+        [Button(ButtonSizes.Large), GUIColor(0f, 1f, 0f)]
         public void Play()
         {
             Init();
+
+            if (instant)
+            {
+                
+                foreach (var t in _sequences)
+                {
+                    t.Complete();
+                }
+            }
+
+            _isPlaying = true;
             
             _sequences[0].Play();
 
@@ -134,7 +148,42 @@ namespace Tool.TweenFlow
                 _sequences[i].SetDelay(_delayTimes[i - 1]).Play().SetUpdate(ignoreTimeScale);
             }
             
-            _sequences.Last().OnComplete(() => OnComplete?.Invoke());
+            _sequences.Last().OnComplete(() =>
+            {
+                OnComplete?.Invoke();
+                _isPlaying = false;
+            });
+        }
+
+        [Button, HorizontalGroup("Buttons", 0.33f)]
+        public void Pause()
+        {
+            if (!_isPlaying) return;
+
+            foreach (var t in _sequences)
+            {
+                t.Pause();
+            }
+        }
+
+        [Button, HorizontalGroup("Buttons", 0.33f)]
+        public void Restart()
+        {
+            if (!_isPlaying) return;
+
+            foreach (var t in _sequences)
+            {
+                t.Play();
+            }
+        }
+
+        [Button, HorizontalGroup("Buttons", 0.33f)]
+        public void Complete()
+        {
+            foreach (var t in _sequences)
+            {
+                t.Complete();
+            }
         }
     }
 }

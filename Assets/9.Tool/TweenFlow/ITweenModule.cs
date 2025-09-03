@@ -6,8 +6,7 @@ namespace Tool.TweenFlow
 {
     public interface ITweenModule
     {
-        List<Tween> tweens { get; set; }
-
+        List<Tween> Tweens { get; set; }
         string DisplayName { get; }
         List<Tween> BuildTweens();
     }
